@@ -19,3 +19,46 @@ function modelLoaded()
 {
 console.log('modelLoaded');
 }
+console.log('ml5 version',ml5.version);
+function check()
+{
+Capture=document.getElementById('capture_img');
+classifier.classify(Capture, gotResult);
+}
+function gotResult(error, results)
+{
+if(error)
+{
+console.error(error);
+}
+else
+{
+console.log(results);
+document.getElementById("result_emotion_name").innerHTML=results[0].label;
+Gesture=results[0].label;
+toSpeak="";
+if(Gesture=="Thumb Up")
+{
+toSpeak="All the Best";
+document.getElementById("update_emoji").innerHTML="&#128077;"
+}
+else if(Gesture=="Amazing")
+{
+toSpeak="The is looking amazing";
+document.getElementById("update_emoji").innerHTML="&#128076;";
+}
+else if(Gesture=="Victory")
+{
+toSpeak="That was a Marvelous Victory";
+document.getElementById("update_emoji").innerHTML="&#9996;";
+}
+Speak();
+}
+}
+function Speak()
+{
+var =window.speechSynthesis;
+speak_data=toSpeak;
+var utterThis=new SpeechSynthesisUtterance(speak_data);
+.Speak(utterThis);
+}
